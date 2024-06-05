@@ -72,4 +72,6 @@ def show():
             data_key="y", name="y", type_="number"
         ),
         rx.recharts.graphing_tooltip(),
+        height = 200,
+        width = 500,
     )

@@ -5,6 +5,7 @@ import reflex as rx
 from rxconfig import config
 
 from . import area
+from . import axis
 from . import bar
 from . import brush
 from . import cartesian_grid
@@ -25,8 +26,7 @@ from . import tree
 
 class State(rx.State):
     """The app state."""
-    default: str
-    display: str = "Area"
+    display: str = "Axis"
 
     def set_display(self, selection):
         self.display = selection
@@ -35,16 +35,17 @@ class State(rx.State):
 def charts():
     return rx.vstack(
         rx.select(
-            ["Area", "Bar", "Brush", "CartesianGrid", "ErrorBar", "Funnel", "Label", "Legend", "Line", "Pie", "Tree", "Radar", "ComposedChart", "Reference", "Tooltip", "ScatterChart"],
+            ["Area", "Axis", "Bar", "Brush", "CartesianGrid", "ErrorBar", "Funnel", "Label", "Legend", "Line", "Pie", "Tree", "Radar", "ComposedChart", "Reference", "Tooltip", "ScatterChart"],
             variant="soft",
             radius="full",
             width="60%",
-            default_value="Area",
+            default_value="Axis",
             on_change=State.set_display,
         ),
         rx.match(
             State.display,
             ("Area", area.show()),
+            ("Axis", axis.show()),
             ("Bar", bar.show()),
             ("Brush", brush.show()),
             ("CartesianGrid", cartesian_grid.show()),

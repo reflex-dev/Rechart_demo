@@ -17,4 +17,6 @@ def show():
         ),
         rx.recharts.x_axis(data_key="x", type_="number"),
         rx.recharts.y_axis(data_key="y"),
+        height = 200,
+        width = 500,
     )

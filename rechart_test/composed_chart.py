@@ -26,4 +26,6 @@ def show():
         rx.recharts.cartesian_grid(stroke_dasharray="3 3"),
         rx.recharts.graphing_tooltip(),
         data=data,
+        height = 200,
+        width = 500,
     )
