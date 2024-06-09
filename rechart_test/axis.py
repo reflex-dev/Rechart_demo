@@ -28,7 +28,8 @@ data2 = [
     {'x': 750, 'y': 700},
     {'x': 800, 'y': 720},
 ]
-
+        # on_animation_start = rx.window_alert("Amimation Start"),
+        # on_animation_end = rx._x.toast("Animation end"),
 
 # height and width are indicated how much space takes. 
 def axis_1():
@@ -38,10 +39,10 @@ def axis_1():
         ),
         rx.recharts.x_axis(
             data_key="name",
-            height = 50,
+            on_click=rx._x.toast("X axis clicked"),
         ),
         rx.recharts.y_axis(
-            width = 50,
+            on_mouse_over=rx.window_alert("mouse over Y"),
         ),
         data=data,
         width = 500,
@@ -55,8 +56,8 @@ def axis_2():
             data_key="y",
             stroke="#8884d8",
         ),
-        rx.recharts.x_axis(data_key="x"),
-        rx.recharts.y_axis(),
+        rx.recharts.x_axis(data_key="x", tick_count = 7, min_tick_gap = 30),
+        rx.recharts.y_axis(tick_line = False, ticks = [200, 300, 500, 800]),
         data=data2,
         width = 500,
         height = 400,

@@ -184,7 +184,7 @@ data = [
 def show():
     return rx.recharts.treemap(
         rx.recharts.graphing_tooltip(),
-        # on_animation_start = rx._x.toast("Animation start"),
+        on_animation_start = rx.window_alert("Amimation Start"),
         on_animation_end = rx._x.toast("Animation end"),
         data=data,
         data_key="size",

@@ -10,7 +10,7 @@ data = [
     {"name": "Page G", "uv": 3490, "pv": 4300, "amt": 2100},
 ]
 
-def show():
+def cgrid_1():
     return rx.recharts.composed_chart(
         rx.recharts.area(
             data_key="uv", stroke="#8884d8", fill="#8884d8"
@@ -28,4 +28,44 @@ def show():
         data=data,
         height = 200,
         width = 500,
+    )
+
+data2 = [
+    {"x": 100, "y": 200, "z": 200},
+    {"x": 120, "y": 100, "z": 260},
+    {"x": 170, "y": 300, "z": 400},
+    {"x": 170, "y": 250, "z": 280},
+    {"x": 150, "y": 400, "z": 500},
+    {"x": 110, "y": 280, "z": 200},
+    {"x": 200, "y": 150, "z": 300},
+    {"x": 130, "y": 350, "z": 450},
+    {"x": 90, "y": 220, "z": 180},
+    {"x": 180, "y": 320, "z": 350},
+    {"x": 140, "y": 230, "z": 320},
+    {"x": 160, "y": 180, "z": 240},
+]
+
+
+def cgrid_2():
+    return rx.recharts.scatter_chart(
+        rx.recharts.scatter(
+            data=data2,
+            fill="#8884d8",
+        ),
+        rx.recharts.x_axis(data_key="x", type_="number"),
+        rx.recharts.y_axis(data_key="y"),
+        rx.recharts.cartesian_grid(
+            stroke_dasharray="3 3",
+            horizontal_points=[0, 25, 50],
+            vertical_points=[70, 100, 130],
+        ),
+        height = 200,
+        width = 500,
+    )
+
+
+def show():
+    return rx.vstack(
+        cgrid_1(),
+        cgrid_2(),
     )

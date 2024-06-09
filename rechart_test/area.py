@@ -53,7 +53,7 @@ def area_2():
         rx.recharts.y_axis(),
         data=data,
         stack_offset="none",
-        margin={"top": 5, "right": 5, "bottom": 5, "left": 5 },
+        margin={"top": 5, "right": 5, "bottom": 5, "left": 5},
         height = 300,
         width = 500,
     )
@@ -74,38 +74,129 @@ def area_3():
 
 class AreaState(rx.State):
     data = data
+    curve_type = ""
     def randomize_data(self):
         for i in range(len(self.data)):
             self.data[i]["uv"] = random.randint(0, 10000)
             self.data[i]["pv"] = random.randint(0, 10000)
             self.data[i]["amt"] = random.randint(0, 10000)
 
+    def change_curve_type(self, type_input):
+        self.curve_type = type_input
+
 def area_4():
+    return rx.vstack(
+        rx.select(
+            [
+                'basis',
+                'basisClosed',
+                'basisOpen',
+                'bumpX',
+                'bumpY',
+                'bump',
+                'linear',
+                'linearClosed',
+                'natural',
+                'monotoneX',
+                'monotoneY',
+                'monotone',
+                'step',
+                'stepBefore',
+                'stepAfter'
+            ],
+            on_change = AreaState.change_curve_type,
+            default = 'basis',
+        ),
+        rx.recharts.area_chart(
+            rx.recharts.area(
+                data_key="uv",
+                stroke="#8884d8",
+                fill="#8884d8",
+                on_click=AreaState.randomize_data,
+                type_ = AreaState.curve_type,
+            ),
+            rx.recharts.area(
+                data_key="pv",
+                stroke="#82ca9d",
+                fill="#82ca9d",
+                on_click=AreaState.randomize_data,
+                type_ = AreaState.curve_type,
+            ),
+            rx.recharts.x_axis(
+                data_key="name",
+            ),
+            rx.recharts.y_axis(),
+            rx.recharts.legend(),
+            rx.recharts.cartesian_grid(
+                stroke_dasharray="3 3",
+            ),
+            data=AreaState.data,
+            width=500,
+            height=400,
+        )
+    )
+
+def area_5():
+    return rx.vstack(
+        rx.recharts.bar_chart(
+            rx.recharts.bar(
+                data_key="uv", stroke="#8884d8", fill="#8884d8"
+            ),
+            rx.recharts.bar(
+                data_key="pv", stroke="#82ca9d", fill="#82ca9d",
+            ),
+            rx.recharts.x_axis(data_key="name"),
+            rx.recharts.y_axis(),
+            rx.recharts.graphing_tooltip(),
+            data=data,
+            sync_id="1",
+            width = 600,
+            height = 250,
+        ),
+        rx.recharts.composed_chart(
+            rx.recharts.area(
+                data_key="uv", stroke="#8884d8", fill="#8884d8"
+            ),
+            rx.recharts.bar(
+                data_key="amt", fill="#413ea0"
+            ),
+            rx.recharts.bar(
+                data_key="pv", stroke="#82ca9d", fill="#82ca9d",
+            ),
+            rx.recharts.line(
+                data_key="pv", type_="monotone", stroke="#ff7300",
+            ),
+            
+            rx.recharts.x_axis(data_key="name"),
+            rx.recharts.y_axis(),
+            rx.recharts.graphing_tooltip(),
+            rx.recharts.brush(
+                data_key="name", height=30, stroke="#8884d8"
+            ),
+            data=data,
+            sync_id="1",
+            width = 600,
+            height = 250,
+        )
+    )
+
+def area_6():
     return rx.recharts.area_chart(
         rx.recharts.area(
-            data_key="uv",
-            stroke="#8884d8",
-            fill="#8884d8",
-            type_="natural",
-            on_click=AreaState.randomize_data,
+            data_key="uv", stroke="#8884d8", fill="#8884d8", x_axis_id="primary", y_axis_id="left",
         ),
         rx.recharts.area(
-            data_key="pv",
-            stroke="#82ca9d",
-            fill="#82ca9d",
-            type_="natural",
+            data_key="pv", x_axis_id="secondary", y_axis_id="right", type="monotone", stroke="#82ca9d", fill="#82ca9d"
         ),
-        rx.recharts.x_axis(
-            data_key="name",
-        ),
-        rx.recharts.y_axis(),
+        rx.recharts.x_axis(data_key="name", x_axis_id="primary"),
+        rx.recharts.x_axis(data_key="name", x_axis_id="secondary", orientation="top"),
+        rx.recharts.y_axis(data_key="uv", y_axis_id="left"),
+        # rx.recharts.y_axis(data_key="pv", y_axis_id="right", orientation="right"),
+        rx.recharts.graphing_tooltip(),
         rx.recharts.legend(),
-        rx.recharts.cartesian_grid(
-            stroke_dasharray="3 3",
-        ),
-        data=AreaState.data,
-        width=500,
-        height=400,
+        data=data,
+        width = 600,
+        height = 300,
     )
 
 def intro():
@@ -122,9 +213,11 @@ area_4, state
 
 def show():
     return rx.vstack(
-        intro(),
+        # intro(),
         area_1(),
         area_2(),
         area_3(),
         area_4(),
+        area_5(),
+        area_6(),
     )

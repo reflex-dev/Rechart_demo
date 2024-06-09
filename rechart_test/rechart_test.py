@@ -26,7 +26,7 @@ from . import tree
 
 class State(rx.State):
     """The app state."""
-    display: str = "Axis"
+    display: str = "Bar"
 
     def set_display(self, selection):
         self.display = selection
@@ -39,29 +39,29 @@ def charts():
             variant="soft",
             radius="full",
             width="60%",
-            default_value="Axis",
+            default_value="Area",
             on_change=State.set_display,
         ),
         rx.match(
             State.display,
-            ("Area", area.show()),
-            ("Axis", axis.show()),
-            ("Bar", bar.show()),
-            ("Brush", brush.show()),
+            # ("Area", area.show()),
+            # ("Axis", axis.show()),
+            # ("Bar", bar.show()),
+            # ("Brush", brush.show()),
             ("CartesianGrid", cartesian_grid.show()),
-            ("ErrorBar", error_bar.show()),
-            ("Funnel", funnel.show()),
-            ("Label", label.show()),
-            ("Legend", legend.show()),
-            ("Line", line.show()),
-            ("Pie", pie.show()),
-            ("Radar", radar.show()),
-            ("Reference", reference.show()),
-            ("ComposedChart", composed_chart.show()),
-            ("Tooltip", tooltip.show()),
-            ("ScatterChart", ScatterChart.show()),
-            ("Tree", tree.show()),
-            tree.show(),
+            # ("ErrorBar", error_bar.show()),
+            # ("Funnel", funnel.show()),
+            # ("Label", label.show()),
+            # ("Legend", legend.show()),
+            # ("Line", line.show()),
+            # ("Pie", pie.show()),
+            # ("Radar", radar.show()),
+            # ("Reference", reference.show()),
+            # ("ComposedChart", composed_chart.show()),
+            # ("Tooltip", tooltip.show()),
+            # ("ScatterChart", ScatterChart.show()),
+            # ("Tree", tree.show()),
+            cartesian_grid.show(),
         ),
         width = "100%",
         height = "100%",
